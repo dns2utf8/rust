@@ -152,10 +152,17 @@ mod tests {
     fn test_normal() {
         let mut norm = Normal::new(10.0, 10.0);
         let mut rng = ::test::rng();
+
+        let mut sample_sum = 0;
+        let mut ind_sample_sum = 0;
+
         for _ in 0..1000 {
-            norm.sample(&mut rng);
-            norm.ind_sample(&mut rng);
+            sample_sum += norm.sample(&mut rng);
+            ind_sample_sum += norm.ind_sample(&mut rng);
         }
+
+        assert!(9980 < sample_sum && sample_sum < 10020);
+        assert!(9980 < ind_sample_sum && ind_sample_sum < 10020);
     }
     #[test]
     #[should_panic]
