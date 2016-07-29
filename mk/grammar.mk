@@ -58,17 +58,17 @@ check-lexer: $(BG) $(BG)RustLexer.class check-build-lexer-verifier
 	$(Q)$(SG)check.sh $(S) "$(BG)" \
 		"$(CFG_GRUN)" "$(BG)verify" "$(BG)RustLexer.tokens"
 else
-$(info cfg: lexer tooling not available, skipping lexer test...)
+$(info cfg: lexer tooling (grun) not available, skipping lexer test...)
 check-lexer:
 
 endif
 else
-$(info cfg: lexer tooling not available, skipping lexer test...)
+$(info cfg: lexer tooling (antlr4) not available, skipping lexer test...)
 check-lexer:
 
 endif
 else
-$(info cfg: lexer tooling not available, skipping lexer test...)
+$(info cfg: lexer tooling (javac) not available, skipping lexer test...)
 check-lexer:
 
 endif

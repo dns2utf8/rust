@@ -51,7 +51,7 @@ void push_back(char c) {
   for (int i = 0; i < PUSHBACK_LEN; ++i) {
     if (pushback[i] == '\0') {
       pushback[i] = c;
-      break;
+      return;
     }
   }
 }

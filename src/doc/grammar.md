@@ -746,7 +746,16 @@ return_expr : "return" expr ? ;
 
 ### Function types
 
-**FIXME:** grammar?
+```antlr
+function_type := [ 'unsafe' ] 'fn' function_name
+                 [ '<' lifetime-list | typeargument-list | lifetime-list ',' typeargument-list '>' ] '(' arg-list ')'
+                 [ ':' bound-list ] [ '->' type ]
+lifetime-list := lifetime | lifetime ',' lifetime-list
+typeargument-list := typeargument | typeargument ',' typeargument-list
+arg-list := ident ':' type | ident ':' type ',' arg-list
+bound-list := bound | bound '+' bound-list
+bound := path | lifetime
+```
 
 ### Closure types
 
