@@ -190,6 +190,7 @@ pub fn rustc(build: &Build, stage: u32, host: &str) {
     t!(fs::remove_dir_all(&overlay));
 
     fn prepare_image(build: &Build, stage: u32, host: &str, image: &Path) {
+        let version = &build.version;
         let src = build.sysroot(&Compiler::new(stage, host));
         let libdir = libdir(host);
 
@@ -215,20 +216,24 @@ pub fn rustc(build: &Build, stage: u32, host: &str) {
         let now_string = calc_now_string();
         println!("Searchable 98hnandsf9ifnesd");
         for man_page_source in t!(build.src.join("man").read_dir()).map(|e| t!(e)) {
-          let os_filename = man_page_source.file_name();
+          let os_file_name = man_page_source.file_name();
 
-          if let Some(filename) = os_filename.to_str() {
-
+          if let Some(file_name) = os_file_name.to_str() {
             // Match all source files
-            if filename.ends_with(".1.in") {
-                let header =
-                    format!(r##".TH RUSTC "1" "{now_string}" "rustc 1.12.0" "User Commands""##
-                    , now_string=now_string);
+            if file_name.ends_with(".1.in") {
+                let header = format!(
+                    r##".TH RUSTC "1" "{now_string}" "{file_name} {version}" "User Commands""##
+                    , now_string=now_string, file_name="98hnandsf9ifnesd", version=version);
+                let file_contents = "98hnandsf9ifnesd";
+                let target = image.join("share/man/man1").join(file_name);
 
                 println!("build: {:?}\nheader: {:?}", build.release, header);
+                echo(&format!("{}\n{}", header, file_contents),
+                    &target.join(file_name),
+                    0o644);
             }
             // Match all generated files
-            if filename.ends_with(".1") {
+            if file_name.ends_with(".1") {
                 // FIXME copy them
             }
           }
@@ -247,6 +252,7 @@ pub fn rustc(build: &Build, stage: u32, host: &str) {
         cp("README.md");
     }
 
+    /// Returns a String like "August 2016"
     fn calc_now_string() -> String {
         use std::time::*;
 
@@ -463,6 +469,16 @@ pub fn rust_src(build: &Build) {
     build.run(&mut cmd);
 
     t!(fs::remove_dir_all(&image));
+}
+
+fn echo(content: &String, dst: &Path, perms: u32) {
+    let dstdir = dst.parent().unwrap();
+    t!(fs::create_dir_all(&dstdir));
+
+    let mut f = t!(File::create(&dst));
+    t!(f.write_all(content.as_bytes()));
+    t!(f.sync_all());
+    chmod(&dst, perms);
 }
 
 fn install(src: &Path, dstdir: &Path, perms: u32) {
