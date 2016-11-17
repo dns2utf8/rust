@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:16.10
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
   g++ \
@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   file \
   curl \
   ca-certificates \
-  python2.7 \
+  python \
   git \
   cmake \
   ccache \
