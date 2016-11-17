@@ -14,7 +14,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   gdb \
   antlr4 \
   bison \
-  flex
+  flex \
+  openjdk-8-jdk-headless
 
 ENV RUST_CONFIGURE_ARGS --build=x86_64-unknown-linux-gnu
 ENV RUST_CHECK_TARGET check-grammar
