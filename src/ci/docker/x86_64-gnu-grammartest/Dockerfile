@@ -17,6 +17,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   flex \
   openjdk-8-jdk-headless
 
+RUN cd /usr/local/lib && curl http://www.antlr.org/download/antlr-4.5.3-complete.jar -o antlr-complete.jar
+
 ENV RUST_CONFIGURE_ARGS --build=x86_64-unknown-linux-gnu
 ENV RUST_CHECK_TARGET check-grammar
 RUN mkdir /tmp/obj
