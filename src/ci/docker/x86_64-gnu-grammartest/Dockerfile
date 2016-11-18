@@ -13,6 +13,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   sudo \
   gdb \
   llvm-3.9-tools \
+  libedit-dev \
+  zlib1g-dev \
   antlr4 \
   bison \
   flex \
