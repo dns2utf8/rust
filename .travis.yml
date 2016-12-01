@@ -55,12 +55,11 @@ script:
   - if [ -z "$ALLOW_PR" ] && [ "$TRAVIS_BRANCH" != "auto" ]; then
         echo skipping, not a full build;
     elif [ -z "$ENABLE_AUTO" ] then
-        echo skipping, not quite ready yet
+        echo skipping, not quite ready yet;
     fi
     elif [ "$TRAVIS_OS_NAME" = "osx" ]; then
         git submodule update --init;
         src/ci/run.sh;
-    fi
     else
         git submodule update --init;
         src/ci/docker/run.sh $IMAGE;
