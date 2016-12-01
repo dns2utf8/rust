@@ -54,7 +54,7 @@ matrix:
 script:
   - if [ -z "$ALLOW_PR" ] && [ "$TRAVIS_BRANCH" != "auto" ]; then
         echo skipping, not a full build;
-    elif [ -z "$ENABLE_AUTO" ] then
+    elif [ -z "$ENABLE_AUTO" ]; then
         echo skipping, not quite ready yet;
     elif [ "$TRAVIS_OS_NAME" = "osx" ]; then
         git submodule update --init;
