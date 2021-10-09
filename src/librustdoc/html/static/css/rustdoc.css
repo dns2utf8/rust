@@ -776,7 +776,7 @@ h2.small-section-header > .anchor {
 	/* align content left */
 	justify-items: start;
 }
-.item-row {
+.item-table tr {
 	display: table-row;
 }
 .item-left, .item-right {
@@ -1888,7 +1888,7 @@ details.undocumented[open] > summary::before {
 	.item-table {
 		display: block;
 	}
-	.item-row {
+	.item-table tr {
 		display: flex;
 		flex-flow: column wrap;
 	}

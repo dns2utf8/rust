@@ -32,10 +32,10 @@ use crate::html::highlight;
 use crate::html::layout::Page;
 use crate::html::markdown::{HeadingOffset, MarkdownSummaryLine};
 
-const ITEM_TABLE_OPEN: &'static str = "<div class=\"item-table\">";
-const ITEM_TABLE_CLOSE: &'static str = "</div>";
-const ITEM_TABLE_ROW_OPEN: &'static str = "<div class=\"item-row\">";
-const ITEM_TABLE_ROW_CLOSE: &'static str = "</div>";
+const ITEM_TABLE_OPEN: &'static str = "<table class=\"item-table\">";
+const ITEM_TABLE_CLOSE: &'static str = "</table>";
+const ITEM_TABLE_ROW_OPEN: &'static str = "<tr>";
+const ITEM_TABLE_ROW_CLOSE: &'static str = "</tr>";
 
 pub(super) fn print_item(cx: &Context<'_>, item: &clean::Item, buf: &mut Buffer, page: &Page<'_>) {
     debug_assert!(!item.is_stripped());
@@ -294,14 +294,14 @@ fn item_module(w: &mut Buffer, cx: &Context<'_>, item: &clean::Item, items: &[cl
                 match *src {
                     Some(ref src) => write!(
                         w,
-                        "<div class=\"item-left\"><code>{}extern crate {} as {};",
+                        "<td class=\"item-left\"><code>{}extern crate {} as {};",
                         myitem.visibility.print_with_space(myitem.def_id, cx),
                         anchor(myitem.def_id.expect_def_id(), &*src.as_str(), cx),
                         myitem.name.as_ref().unwrap(),
                     ),
                     None => write!(
                         w,
-                        "<div class=\"item-left\"><code>{}extern crate {};",
+                        "<td class=\"item-left\"><code>{}extern crate {};",
                         myitem.visibility.print_with_space(myitem.def_id, cx),
                         anchor(
                             myitem.def_id.expect_def_id(),
@@ -310,7 +310,7 @@ fn item_module(w: &mut Buffer, cx: &Context<'_>, item: &clean::Item, items: &[cl
                         ),
                     ),
                 }
-                w.write_str("</code></div>");
+                w.write_str("</code></td>");
                 w.write_str(ITEM_TABLE_ROW_CLOSE);
             }
 
@@ -339,10 +339,10 @@ fn item_module(w: &mut Buffer, cx: &Context<'_>, item: &clean::Item, items: &[cl
                 w.write_str(ITEM_TABLE_ROW_OPEN);
                 write!(
                     w,
-                    "<div class=\"item-left {stab}{add}import-item\">\
+                    "<td class=\"item-left {stab}{add}import-item\">\
                          <code>{vis}{imp}</code>\
-                     </div>\
-                     <div class=\"item-right docblock-short\">{stab_tags}</div>",
+                     </td>\
+                     <td class=\"item-right docblock-short\">{stab_tags}</td>",
                     stab = stab.unwrap_or_default(),
                     add = add,
                     vis = myitem.visibility.print_with_space(myitem.def_id, cx),
@@ -373,12 +373,12 @@ fn item_module(w: &mut Buffer, cx: &Context<'_>, item: &clean::Item, items: &[cl
                 w.write_str(ITEM_TABLE_ROW_OPEN);
                 write!(
                     w,
-                    "<div class=\"item-left {stab}{add}module-item\">\
+                    "<td class=\"item-left {stab}{add}module-item\">\
                          <a class=\"{class}\" href=\"{href}\" title=\"{title}\">{name}</a>\
                              {unsafety_flag}\
                              {stab_tags}\
-                     </div>\
-                     <div class=\"item-right docblock-short\">{docs}</div>",
+                     </td>\
+                     <td class=\"item-right docblock-short\">{docs}</td>",
                     name = *myitem.name.as_ref().unwrap(),
                     stab_tags = extra_info_tags(myitem, item, cx.tcx()),
                     docs = MarkdownSummaryLine(&doc_value, &myitem.links(cx)).into_string(),
